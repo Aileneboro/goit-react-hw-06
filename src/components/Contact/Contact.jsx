@@ -6,7 +6,7 @@ import css from "./Contact.module.css";
 const Contact = ({ name, number, id }) => {
   const dispatch = useDispatch();
 
-  const handleDelete = () => {
+  const handleDeleteContact = () => {
     dispatch(deleteContact(id));
   };
 
@@ -22,7 +22,7 @@ const Contact = ({ name, number, id }) => {
           {number}
         </p>
       </div>
-      <button className={css.button} onClick={handleDelete}>
+      <button className={css.button} onClick={handleDeleteContact}>
         Delete
       </button>
     </div>
