@@ -1,5 +1,7 @@
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
+import { useDispatch } from "react-redux";
+import { addContact } from "../../redux/contactsSlice";
 import css from "./ContactForm.module.css";
 
 const validationSchema = Yup.object().shape({
@@ -13,15 +15,19 @@ const validationSchema = Yup.object().shape({
     .required("Required"),
 });
 
-const ContactForm = ({ onSubmit }) => {
+const ContactForm = () => {
+  const dispatch = useDispatch();
+
+  const handleSubmit = (values, { resetForm }) => {
+    dispatch(addContact(values));
+    resetForm();
+  };
+
   return (
     <Formik
       initialValues={{ name: "", number: "" }}
       validationSchema={validationSchema}
-      onSubmit={(values, { resetForm }) => {
-        onSubmit(values);
-        resetForm();
-      }}
+      onSubmit={handleSubmit}
     >
       {({ isSubmitting }) => (
         <Form>

@@ -1,8 +1,15 @@
-import { TiUser } from "react-icons/ti";
-import { TiPhone } from "react-icons/ti";
+import { TiUser, TiPhone } from "react-icons/ti";
+import { useDispatch } from "react-redux";
+import { deleteContact } from "../../redux/contactsSlice";
 import css from "./Contact.module.css";
 
-const Contact = ({ name, number, id, onDelete }) => {
+const Contact = ({ name, number, id }) => {
+  const dispatch = useDispatch();
+
+  const handleDelete = () => {
+    dispatch(deleteContact(id));
+  };
+
   return (
     <div className={css.contactContainer}>
       <div>
@@ -15,7 +22,7 @@ const Contact = ({ name, number, id, onDelete }) => {
           {number}
         </p>
       </div>
-      <button className={css.button} onClick={() => onDelete(id)}>
+      <button className={css.button} onClick={handleDelete}>
         Delete
       </button>
     </div>
