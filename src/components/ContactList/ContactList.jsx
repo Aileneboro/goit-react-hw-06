@@ -1,26 +1,21 @@
-import { useSelector, useDispatch } from "react-redux";
 import Contact from "../Contact/Contact";
-import { selectContacts, deleteContact } from "../../redux/contactsSlice";
 import { nanoid } from "nanoid";
+import { useSelector } from "react-redux";
+import { selectContacts } from "../../redux/contactsSlice";
+import { selectNameFilter } from "../../redux/filtersSlice";
 
 const ContactList = () => {
   const contacts = useSelector(selectContacts);
-  const dispatch = useDispatch();
-
-  const handleDelete = (id) => {
-    dispatch(deleteContact(id));
-  };
+  const filter = useSelector(selectNameFilter);
+  const visibleContacts = contacts.filter((contact) =>
+    contact.name.toLowerCase().includes(filter.toLowerCase())
+  );
 
   return (
     <ul>
-      {contacts.map((contact) => (
+      {visibleContacts.map((contact) => (
         <li key={nanoid()}>
-          <Contact
-            name={contact.name}
-            number={contact.number}
-            onDelete={handleDelete}
-            id={contact.id}
-          />
+          <Contact name={contact.name} number={contact.number} />
         </li>
       ))}
     </ul>
